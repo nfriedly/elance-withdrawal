@@ -1,6 +1,6 @@
 {
   "name": "elance-withdrawal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automatically log into your elance account and withdrawal any avaliable balance to your specified account",
   "main": "index.js",
   "scripts": {
