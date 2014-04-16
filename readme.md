@@ -16,6 +16,25 @@ To find your --withdrawal-account-id, view-source on the withdrawal form and fin
 
 Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"
 
+Heroku Usage:
+
+Create the app with the casperjs buildpack from http://github.com/misza222/heroku-buildpack-casperjs
+
+  heroku apps:create [optional-app-name] --stack cedar --buildpack http://github.com/misza222/heroku-buildpack-casperjs.git
+  
+Add logging and cronjob suppport:
+
+  heroku addons:add loggly:mole
+  heroku addons:add scheduler
+  
+Open the cronjob config page:
+
+  heroku addons:open scheduler
+  
+Set the cronjob to run
+
+  ./vendor/casperjs/bin/casperjs index.js --username=you@yoursit.com --password=... etc.
+
 MIT License
 ------------
 
