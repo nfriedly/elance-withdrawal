@@ -4,11 +4,13 @@ Elance Automatic Withdrawal Bot
 Logs into your Elance account once per day and withdrawals any available funds. 
 Built because Elance won't do it automatically.
 
-Installation: 
+Installation
+------------
 
     npm install -g elance-withdrawal
 
-Usage: 
+Usage
+-----
 
     elance-withdrawal --username=foo@bar.com --password=abc123 --withdrawal-account-id=12434567 --"security question?"="security answer" --"other security question?"="other answer"
 
@@ -16,24 +18,27 @@ To find your --withdrawal-account-id, view-source on the withdrawal form and fin
 
 Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"
 
-Heroku Usage:
+Heroku Usage
+------------
 
 Create the app with the casperjs buildpack from http://github.com/misza222/heroku-buildpack-casperjs
 
-  heroku apps:create [optional-app-name] --stack cedar --buildpack http://github.com/misza222/heroku-buildpack-casperjs.git
+    heroku apps:create [optional-app-name] --stack cedar --buildpack http://github.com/misza222/heroku-buildpack-casperjs.git
   
 Add logging and cronjob suppport:
 
-  heroku addons:add loggly:mole
-  heroku addons:add scheduler
+    heroku addons:add loggly:mole
+    heroku addons:add scheduler
   
 Open the cronjob config page:
 
-  heroku addons:open scheduler
+    heroku addons:open scheduler
   
 Set the cronjob to run
 
-  ./vendor/casperjs/bin/casperjs index.js --username=you@yoursit.com --password=... etc.
+    ./vendor/casperjs/bin/casperjs index.js --username=you@yoursit.com --password=... etc.
+    
+If it doesn't seem to be working, run `heroku run bash` to open a shell on a new server instance. Then you can try running different commands and see what's going on.
 
 MIT License
 ------------
