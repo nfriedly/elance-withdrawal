@@ -1,0 +1,1 @@
+worker: casperjs index.js
