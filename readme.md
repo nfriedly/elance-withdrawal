@@ -15,7 +15,7 @@ Usage
 
     elance-withdrawal --username=foo@bar.com --password=abc123 --withdrawal-account-id=12434567 --"security question?"="security answer" --"other security question?"="other answer"
 
-To find your --withdrawal-account-id, view-source on the withdrawal form and find the *VALUE* of the <option> in the select dropdown that lists your accounts.
+To find your --withdrawal-account-id, view-source on the [withdrawal](https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php) form and find the `value` of the `<option>` in the `<select>` dropdown that lists your accounts.
 
 Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"
 
