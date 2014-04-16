@@ -1,1 +1,1 @@
-worker: casperjs index.js
+worker: npm start
