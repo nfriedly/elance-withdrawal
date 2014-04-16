@@ -1,8 +1,7 @@
 Elance Automatic Withdrawal Bot
 ===============================
 
-Logs into your Elance account once per day and withdrawals any available funds. 
-Built because Elance won't do it automatically.
+Logs into your Elance account and withdrawals any available funds to the account you specify.
 
 Installation
 ------------
