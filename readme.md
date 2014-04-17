@@ -8,7 +8,7 @@ Installation
 
     npm install -g elance-withdrawal
     
-(Requires node.js - doenload it from http://nodejs.org/)
+(Requires node.js - download it from http://nodejs.org/)
 
 Usage
 -----
