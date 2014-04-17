@@ -5,6 +5,7 @@ Logs into your Elance account and withdrawals any available funds to the account
 
 Installation
 ------------
+Run the following command on your command line to install this script:
 
     npm install -g elance-withdrawal
     
@@ -12,15 +13,22 @@ Installation
 
 Usage
 -----
+To use this script on your computer, run `elance-withdrawal` from the command line to perform a withdrawal. The folowing arguments are all required:
+ * *username*: your Elance username or email address
+ * *password*: your Elance password
+ * *withdrawal-account-id*: This is Elance's internal ID for your bank or paypal account. To find it, view-source on the [withdrawal](https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php) form, find the `<select>` dropdown that lists your accounts, and find `<option>` that lists your account. It should have a the `value="<some number>` - that number is the account ID.
+ * *Security questions*: Copy your entire security question, and your answer. fFormat it like so: `--"What's your pets name?"="Rover"`
+
+All arguments should be prefixed with `--` and seperated from their values by an `=` (no spaces). So, alltogether, the command would look like this:
 
     elance-withdrawal --username=foo@bar.com --password=abc123 --withdrawal-account-id=12434567 --"security question?"="security answer" --"other security question?"="other answer"
-
-To find your --withdrawal-account-id, view-source on the [withdrawal](https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php) form and find the `value` of the `<option>` in the `<select>` dropdown that lists your accounts.
 
 Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"
 
 Heroku Usage
 ------------
+
+This script can be run on a free [Heroku](http://www.heroku.com/) server with a little bit of setup. Complete instructions for how to use heroku is beyond the scope of this document, but they have [very good documentation](https://devcenter.heroku.com/). The following instructions require the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
 Create the app with the casperjs buildpack from http://github.com/misza222/heroku-buildpack-casperjs
 
