@@ -22,7 +22,7 @@ if (!username || !password || !withdrawalAccountId || !securityQuestions.length)
     throw usageMsg;
 }
 casper.start('https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php', function() {
-    console.log('Logging in...');
+    this.echo('Logging in...');
     this.fill('#loginForm', { lnm: username, pwd: password }, false); // false = don't submit - all of their forms requires some magic JS to work properly
     this.click('#spr-sign-in-btn-standard');
 });
@@ -56,9 +56,12 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
     console.log('Available balance is $' + textBalance);
     
     // only continue if there is a balance alaliable
-    if (parseFloat(textBalance) > 0) {        
-        this.fill('#withdrawForm', {method: withdrawalAccountId, txn_amount: textBalance}, false);
-        this.click('#FundWithDraw');
+    if (parseFloat(textBalance) > 0) {
+        // evidently you have to wait for this form..?
+        casper.waitForSelector('#withdrawForm', function() {
+            this.fill('#withdrawForm', {method: withdrawalAccountId, txn_amount: textBalance}, false);
+            this.click('#FundWithDraw');
+        });
     } else {
         casper.exit();
     }
