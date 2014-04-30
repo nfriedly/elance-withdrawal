@@ -14,6 +14,8 @@ var casper = require('casper').create({
     logLevel: 'debug'
 });
 
+var timeout = 15*1000;
+
 var username = casper.cli.get("username");
 var password = casper.cli.get("password");
 var withdrawalAccountId = casper.cli.get('withdrawal-account-id'); // '';
@@ -29,7 +31,7 @@ casper.start('https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/
     this.echo('Logging in...');
     this.fill('#loginForm', { lnm: username, pwd: password }, false); // false = don't submit - all of their forms requires some magic JS to work properly
     this.click('#spr-sign-in-btn-standard');
-});
+}, null, timeout);
 
 casper.waitForUrl(/securityAudit/, function securityQuestionPage() {
     var securityQ = this.evaluate(function() {
@@ -50,7 +52,7 @@ casper.waitForUrl(/securityAudit/, function securityQuestionPage() {
     this.echo('Security question is "' + securityQ + '". Answering with value from --' + questionParam);
     this.fill('#sa-securityForm', {challengeAnswer: answer}, false);
     this.click('#ContinueLogin');
-});
+}, null, timeout);
 
 // this must be written this way because otherwise it will run early on https://www.elance.com/php/myelance/main/index.php?redirect=https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php?
 casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\/Withdrawal\/Controller\/Withdraw.php/, function withdrawalPage() {
@@ -66,25 +68,25 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
         casper.waitForSelector('#withdrawForm', function withdrawalForm() {
             this.fill('#withdrawForm', {method: withdrawalAccountId, txn_amount: textBalance}, false);
             this.click('#FundWithDraw');
-        });
+        }, null, timeout);
     } else {
         casper.exit();
     }
-});
+}, null, timeout);
 
 casper.waitForUrl('#stage=preview', function previewPage() {
     // this form is sometimes slow to load
     casper.waitForSelector('#previewForm', function previewForm() {
         this.fill('#previewForm', {password: password}, false);
         this.click('#submit_btn');
-    });
-});
+    }, null, timeout);
+}, null, timeout);
 
 var success_url_start = 'https://www.elance.com/php/framework/main/confirm.php?mode=withdraw&txn_id='
 casper.waitForUrl(success_url_start, function successPage() {
     var transactionId = this.getGlobal('location').href.substr(success_url_start.length)
     this.echo("Withdrawal complete, transaction ID is " + transactionId);
-});
+}, null, timeout);
 
 /*
 casper.on('error', function(msg,backtrace) {
