@@ -57,7 +57,7 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
     
     // only continue if there is a balance alaliable
     if (parseFloat(textBalance) > 0) {
-        // evidently you have to wait for this form..?
+        // wait for this form just in case
         casper.waitForSelector('#withdrawForm', function() {
             this.fill('#withdrawForm', {method: withdrawalAccountId, txn_amount: textBalance}, false);
             this.click('#FundWithDraw');
@@ -68,8 +68,11 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
 });
 
 casper.waitForUrl('#stage=preview', function() {
-    this.fill('#previewForm', {password: password}, false);
-    this.click('#submit_btn');
+    // this form is sometimes slow to load
+    casper.waitForSelector('#previewForm', function() {
+        this.fill('#previewForm', {password: password}, false);
+        this.click('#submit_btn');
+    });
 });
 
 var success_url_start = 'https://www.elance.com/php/framework/main/confirm.php?mode=withdraw&txn_id='
@@ -78,5 +81,12 @@ casper.waitForUrl(success_url_start, function() {
     this.echo("Withdrawal complete, transaction ID is " + transactionId);
 });
 
+/*
+casper.on('error', function(msg,backtrace) {
+  this.debugHTML();
+  this.capture('./error.png');
+  console.error(msg, '\n', JSON.stringify(backtrace));
+});
+*/
 
 casper.run();
