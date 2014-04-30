@@ -9,18 +9,22 @@ var usageMsg = [
     'Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"'
 ].join('\n');
 
-var casper = require('casper').create();
+var casper = require('casper').create({
+    verbose: true,
+    logLevel: 'debug'
+});
 
 var username = casper.cli.get("username");
 var password = casper.cli.get("password");
 var withdrawalAccountId = casper.cli.get('withdrawal-account-id'); // '';
 var securityQuestions = Object.keys(casper.cli.options).filter(function(q) {
     // everything except the args below is assumed to be a potential security question
-    return ['casper-path', 'cli', 'direct', 'log-level', 'engine', 'username', 'password', 'withdrawal-account-id'].indexOf(q) == -1;
+    return ['casper-path', 'cli', 'direct', 'engine', 'username', 'password', 'withdrawal-account-id'].indexOf(q) == -1;
 });
 if (!username || !password || !withdrawalAccountId || !securityQuestions.length) {
     throw usageMsg;
 }
+
 casper.start('https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php', function() {
     this.echo('Logging in...');
     this.fill('#loginForm', { lnm: username, pwd: password }, false); // false = don't submit - all of their forms requires some magic JS to work properly
@@ -57,6 +61,7 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
     
     // only continue if there is a balance alaliable
     if (parseFloat(textBalance) > 0) {
+        //console.log('SETTING BALANCE TO 0.01 FOR TESTING'); textBalance = '0.01';
         // wait for this form just in case
         casper.waitForSelector('#withdrawForm', function() {
             this.fill('#withdrawForm', {method: withdrawalAccountId, txn_amount: textBalance}, false);

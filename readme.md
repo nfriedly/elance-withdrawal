@@ -36,7 +36,7 @@ Create the app with the casperjs buildpack from http://github.com/misza222/herok
   
 Add logging and cronjob suppport:
 
-    heroku addons:add loggly:mole
+    heroku addons:add logentries
     heroku addons:add scheduler
   
 Open the cronjob config page:
