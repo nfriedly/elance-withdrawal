@@ -59,8 +59,11 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
     var textBalance = this.evaluate(function() {
         return document.querySelectorAll('table.withdrawTable tr:first-child td:last-child')[0].textContent;
     });
-    console.log('Available balance is $' + textBalance);
     
+    textBalance = textBalance.replace(/,/g, ''); // remove commas from values > $999
+    
+    console.log('Available balance is $' + textBalance);
+
     // only continue if there is a balance alaliable
     if (parseFloat(textBalance) > 0) {
         // console.log('SETTING BALANCE TO 0.01 FOR TESTING'); textBalance = '0.01';
