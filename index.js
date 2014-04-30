@@ -25,13 +25,13 @@ if (!username || !password || !withdrawalAccountId || !securityQuestions.length)
     throw usageMsg;
 }
 
-casper.start('https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php', function() {
+casper.start('https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php', function loginPage() {
     this.echo('Logging in...');
     this.fill('#loginForm', { lnm: username, pwd: password }, false); // false = don't submit - all of their forms requires some magic JS to work properly
     this.click('#spr-sign-in-btn-standard');
 });
 
-casper.waitForUrl(/securityAudit/, function() {
+casper.waitForUrl(/securityAudit/, function securityQuestionPage() {
     var securityQ = this.evaluate(function() {
         var titles = document.querySelectorAll('div.title');
         var securityTitleDiv = Array.prototype.filter.call(titles, function(e) {
@@ -53,7 +53,7 @@ casper.waitForUrl(/securityAudit/, function() {
 });
 
 // this must be written this way because otherwise it will run early on https://www.elance.com/php/myelance/main/index.php?redirect=https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php?
-casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\/Withdrawal\/Controller\/Withdraw.php/, function() {
+casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\/Withdrawal\/Controller\/Withdraw.php/, function withdrawalPage() {
     var textBalance = this.evaluate(function() {
         return document.querySelectorAll('table.withdrawTable tr:first-child td:last-child')[0].textContent;
     });
@@ -61,9 +61,9 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
     
     // only continue if there is a balance alaliable
     if (parseFloat(textBalance) > 0) {
-        //console.log('SETTING BALANCE TO 0.01 FOR TESTING'); textBalance = '0.01';
+        // console.log('SETTING BALANCE TO 0.01 FOR TESTING'); textBalance = '0.01';
         // wait for this form just in case
-        casper.waitForSelector('#withdrawForm', function() {
+        casper.waitForSelector('#withdrawForm', function withdrawalForm() {
             this.fill('#withdrawForm', {method: withdrawalAccountId, txn_amount: textBalance}, false);
             this.click('#FundWithDraw');
         });
@@ -72,16 +72,16 @@ casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\
     }
 });
 
-casper.waitForUrl('#stage=preview', function() {
+casper.waitForUrl('#stage=preview', function previewPage() {
     // this form is sometimes slow to load
-    casper.waitForSelector('#previewForm', function() {
+    casper.waitForSelector('#previewForm', function previewForm() {
         this.fill('#previewForm', {password: password}, false);
         this.click('#submit_btn');
     });
 });
 
 var success_url_start = 'https://www.elance.com/php/framework/main/confirm.php?mode=withdraw&txn_id='
-casper.waitForUrl(success_url_start, function() {
+casper.waitForUrl(success_url_start, function successPage() {
     var transactionId = this.getGlobal('location').href.substr(success_url_start.length)
     this.echo("Withdrawal complete, transaction ID is " + transactionId);
 });
