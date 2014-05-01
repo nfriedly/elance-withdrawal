@@ -16,7 +16,7 @@ Usage
 To use this script on your computer, run `elance-withdrawal` from the command line to perform a withdrawal. The folowing arguments are all required:
  * *username*: your Elance username or email address
  * *password*: your Elance password
- * *withdrawal-account-id*: This is Elance's internal ID for your bank or paypal account. To find it, view-source on the [withdrawal](https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php) form, find the `<select>` dropdown that lists your accounts, and find `<option>` that lists your account. It should have a the `value="<some number>` - that number is the account ID.
+ * *withdrawal-account-id*: This is Elance's internal ID for your bank or paypal account. To find it, view-source on the [withdrawal](https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php) form, find the `<select>` dropdown that lists your accounts, and find `<option>` that lists your account. It should have a `value="some number"` - that number is the account ID.
  * *Security questions*: Copy your entire security question, and your answer. fFormat it like so: `--"What's your pets name?"="Rover"`
 
 All arguments should be prefixed with `--` and seperated from their values by an `=` (no spaces). So, alltogether, the command would look like this:
