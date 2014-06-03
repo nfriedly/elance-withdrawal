@@ -49,6 +49,14 @@ Set the cronjob to run
     
 If it doesn't seem to be working, run `heroku run bash` to open a shell on a new server instance. Then you can try running different commands and see what's going on.
 
+Hire me :)
+----------
+
+Lets build something awesome together! My elance profile is https://www.elance.com/s/nfriedly/?rid=1IFCM
+
+However, my avaliability is pretty limited and I have to turn down the majority of the jobs I get invited to. You'll have a better shot if you send me an email first: nathan@[my github username].com
+
+
 MIT License
 ------------
 
