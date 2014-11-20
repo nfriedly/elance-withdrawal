@@ -17,7 +17,8 @@ To use this script on your computer, run `elance-withdrawal` from the command li
  * *username*: your Elance username or email address
  * *password*: your Elance password
  * *withdrawal-account-id*: This is Elance's internal ID for your bank or paypal account. To find it, view-source on the [withdrawal](https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php) form, find the `<select>` dropdown that lists your accounts, and find `<option>` that lists your account. It should have a `value="some number"` - that number is the account ID.
- * *Security questions*: Copy your entire security question, and your answer. fFormat it like so: `--"What's your pets name?"="Rover"`
+ * *Security questions*: Copy all of your security questions and your answers. Format them like so: 
+    `--"What's your pets name?"="Rover"`
 
 All arguments should be prefixed with `--` and seperated from their values by an `=` (no spaces). So, alltogether, the command would look like this:
 
@@ -34,7 +35,7 @@ Create the app with the casperjs buildpack from http://github.com/misza222/herok
 
     heroku apps:create [optional-app-name] --stack cedar --buildpack http://github.com/misza222/heroku-buildpack-casperjs.git
   
-Add logging and cronjob suppport:
+Add some logging and cronjob support:
 
     heroku addons:add logentries
     heroku addons:add scheduler
@@ -43,9 +44,9 @@ Open the cronjob config page:
 
     heroku addons:open scheduler
   
-Set the cronjob to run
+Set the cronjob to run your complete withdrawal command like so:
 
-    ./vendor/casperjs/bin/casperjs index.js --username=you@yoursit.com --password=... etc.
+    ./vendor/casperjs/bin/casperjs index.js --username=you@yoursite.com --password=... etc.
     
 If it doesn't seem to be working, run `heroku run bash` to open a shell on a new server instance. Then you can try running different commands and see what's going on.
 
@@ -54,7 +55,7 @@ Hire me :)
 
 Lets build something awesome together! My elance profile is https://www.elance.com/s/nfriedly/?rid=1IFCM
 
-However, my avaliability is pretty limited and I have to turn down the majority of the jobs I get invited to. You'll have a better shot if you send me an email first: nathan@[my github username].com
+However, my avaliability is pretty limited and I have to turn down the majority of the jobs I get invited to. You'll have a better shot if you send me an email first: nathan@[my website (see below)].com
 
 
 MIT License
